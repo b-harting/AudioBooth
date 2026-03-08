@@ -40,6 +40,22 @@ final class PlayerManager: ObservableObject, Sendable {
   private init() {
     loadQueue()
     setupRemoteCommandCenter()
+    setupServerObserver()
+  }
+
+  private func setupServerObserver() {
+    let serverID = Audiobookshelf.shared.libraries.current?.serverID
+
+    Audiobookshelf.shared.libraries.objectWillChange
+      .sink { [weak self] _ in
+        DispatchQueue.main.async {
+          if serverID != Audiobookshelf.shared.libraries.current?.serverID {
+            self?.clearCurrent()
+            self?.clearQueue()
+          }
+        }
+      }
+      .store(in: &cancellables)
   }
 
   func restoreLastPlayer() async {
