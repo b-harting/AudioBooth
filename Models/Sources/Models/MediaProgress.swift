@@ -11,6 +11,7 @@ public final class MediaProgress {
   public var currentTime: TimeInterval
   public var duration: TimeInterval
   public var progress: Double
+  public var playbackSpeed: Double?
   public var ebookProgress: Double?
   public var ebookLocation: String?
   public var isFinished: Bool
@@ -27,6 +28,7 @@ public final class MediaProgress {
     currentTime: TimeInterval = 0,
     duration: TimeInterval = .infinity,
     progress: Double = 0,
+    playbackSpeed: Double? = nil,
     ebookProgress: Double? = nil,
     ebookLocation: String? = nil,
     isFinished: Bool = false,
@@ -40,6 +42,7 @@ public final class MediaProgress {
     self.currentTime = currentTime
     self.duration = duration
     self.progress = progress
+    self.playbackSpeed = playbackSpeed
     self.ebookProgress = ebookProgress
     self.ebookLocation = ebookLocation
     self.isFinished = isFinished
@@ -136,6 +139,7 @@ extension MediaProgress {
       existingProgress.isFinished = isFinished
       existingProgress.finishedAt = finishedAt
       existingProgress.lastUpdate = lastUpdate
+      existingProgress.playbackSpeed = playbackSpeed
     } else {
       context.insert(self)
     }

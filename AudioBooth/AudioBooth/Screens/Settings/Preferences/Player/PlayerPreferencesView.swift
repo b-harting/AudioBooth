@@ -332,6 +332,31 @@ struct PlayerPreferencesView: View {
 
     Section {
       VStack(alignment: .leading) {
+        Text("Narration Speed")
+          .textCase(.uppercase)
+          .bold()
+          .accessibilityAddTraits(.isHeader)
+
+        Text("Set your default narration speed for new books.")
+      }
+      .font(.caption)
+
+      Stepper(value: $preferences.defaultPlaybackSpeed, in: 0.5...3.5, step: 0.05) {
+        HStack {
+          Text("Default")
+            .font(.subheadline)
+            .bold()
+          Spacer()
+          Text(verbatim: "\(String(format: "%.2f", preferences.defaultPlaybackSpeed))×")
+            .foregroundStyle(.secondary)
+        }
+      }
+    }
+    .listRowSeparator(.hidden)
+    .listSectionSpacing(.custom(12))
+
+    Section {
+      VStack(alignment: .leading) {
         Text("Playback Speed Adjustments")
           .textCase(.uppercase)
           .bold()

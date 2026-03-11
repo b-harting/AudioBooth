@@ -61,6 +61,9 @@ final class UserPreferences: ObservableObject {
   @AppStorage("chapterProgressionAdjustsWithSpeed")
   var chapterProgressionAdjustsWithSpeed: Bool = false
 
+  @AppStorage("playbackSpeed")
+  var defaultPlaybackSpeed: Double = 1.0
+
   @AppStorage("showFullBookDuration")
   var showFullBookDuration: Bool = false
 

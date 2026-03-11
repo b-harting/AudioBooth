@@ -669,7 +669,7 @@ extension BookPlayerModel {
     setupPlayerObservers()
     setupTimeObserver()
 
-    speed = SpeedPickerSheetViewModel(player: player)
+    speed = SpeedPickerSheetViewModel(player: player, mediaProgress: mediaProgress)
     volume = VolumeLevelSheetViewModel(player: player)
 
     if let localBook = item as? LocalBook {
@@ -1203,6 +1203,7 @@ extension BookPlayerModel {
 
         mediaProgress.lastPlayedAt = Date()
         mediaProgress.lastUpdate = Date()
+        mediaProgress.playbackSpeed = speed.value
         if mediaProgress.duration > 0 {
           mediaProgress.progress = mediaProgress.currentTime / mediaProgress.duration
         }
