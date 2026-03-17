@@ -1,11 +1,11 @@
 import Foundation
-import KeychainAccess
 import Logging
 import Nuke
+import SimpleKeychain
 
 public final class AuthenticationService: ObservableObject {
   private let audiobookshelf: Audiobookshelf
-  private let keychain = Keychain(service: "me.jgrenier.AudioBS")
+  private let keychain = SimpleKeychain(service: "me.jgrenier.AudioBS")
 
   enum Keys {
     static let connections = "audiobookshelf_server_connections"
@@ -17,9 +17,9 @@ public final class AuthenticationService: ObservableObject {
     didSet {
       if !connections.isEmpty {
         guard let data = try? JSONEncoder().encode(connections) else { return }
-        try? keychain.set(data, key: Keys.connections)
+        try? keychain.set(data, forKey: Keys.connections)
       } else {
-        try? keychain.remove(Keys.connections)
+        try? keychain.deleteItem(forKey: Keys.connections)
       }
     }
   }
@@ -61,7 +61,7 @@ public final class AuthenticationService: ObservableObject {
     migrateLegacyConnection()
 
     if connections.isEmpty,
-      let data = try? keychain.getData(Keys.connections),
+      let data = try? keychain.data(forKey: Keys.connections),
       let decoded = try? JSONDecoder().decode([String: Connection].self, from: data)
     {
       self.connections = decoded
@@ -83,7 +83,7 @@ public final class AuthenticationService: ObservableObject {
 
     let legacyConnectionKey = "audiobookshelf_server_connection"
 
-    guard let legacyData = try? keychain.getData(legacyConnectionKey) else {
+    guard let legacyData = try? keychain.data(forKey: legacyConnectionKey) else {
       return
     }
 
@@ -96,7 +96,7 @@ public final class AuthenticationService: ObservableObject {
     AppLogger.authentication.info("Migrating legacy connection to multi-server format")
 
     do {
-      try keychain.remove(legacyConnectionKey)
+      try keychain.deleteItem(forKey: legacyConnectionKey)
     } catch {
       AppLogger.authentication.error("Failed to remove legacy key: \(error.localizedDescription)")
       return
