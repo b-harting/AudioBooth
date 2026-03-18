@@ -1,8 +1,8 @@
 import API
 import Foundation
-import KeychainAccess
 import Logging
 import Models
+import SimpleKeychain
 import SwiftUI
 import UIKit
 
@@ -28,8 +28,8 @@ final class SettingsViewModel: SettingsView.Model {
       DownloadManager.shared.deleteAllServerData()
       PlayerManager.shared.clearCurrent()
 
-      let keychain = Keychain(service: "me.jgrenier.AudioBS")
-      try? keychain.removeAll()
+      let keychain = SimpleKeychain(service: "me.jgrenier.AudioBS")
+      try? keychain.deleteAll()
 
       audiobookshelf.logoutAll()
 

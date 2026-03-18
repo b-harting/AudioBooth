@@ -100,7 +100,7 @@ If you encounter any issues or have questions:
 
 ## Dependencies
 
-- [KeychainAccess](https://github.com/kishikawakatsumi/KeychainAccess) - Secure credential storage
+- [SimpleKeychain](https://github.com/auth0/SimpleKeychain) - Secure credential storage
 - [KSCrash](https://github.com/kstenerud/KSCrash) - Local crash reporting and diagnostics
 - [Nuke](https://github.com/kean/Nuke) - Efficient image loading and caching
 - [Pulse](https://github.com/kean/Pulse) - Network logger and debugging tool
